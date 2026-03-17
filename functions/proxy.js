@@ -2,7 +2,12 @@
   const { searchParams } = new URL(context.request.url);
   const email = searchParams.get('email');
   const base_url = context.env.APPS_SCRIPT_URL;
-  const target_url = \\?email=\\;
+  
+  if (!base_url) {
+    return new Response(JSON.stringify({ error: "APPS_SCRIPT_URL not set" }), { status: 500 });
+  }
+
+  const target_url = `${base_url}?email=${encodeURIComponent(email)}`;
 
   try {
     const response = await fetch(target_url);
