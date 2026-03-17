@@ -25,7 +25,8 @@ export const DataProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
 
     try {
       setLoading(true);
-      const url = /api/proxy?email=;
+      // FIXED: proper template literal with backticks
+      const url = `/api/proxy?email=${encodeURIComponent(user.email)}`;
       const response = await fetch(url);
       if (!response.ok) throw new Error('Network response was not ok');
       const result = await response.json();
