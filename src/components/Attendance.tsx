@@ -42,10 +42,11 @@ export const Attendance: React.FC = () => {
               className="glass-card p-6 rounded-[32px] group hover:scale-[1.02] transition-transform"
             >
               <div className="flex justify-between items-start mb-4">
-                <div className={p-3 rounded-2xl }>
+                {/* FIXED: Added backticks and proper interpolation */}
+                <div className={`p-3 rounded-2xl ${item.color}`}>
                   <IconComponent size={24} />
                 </div>
-                <span className={px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wider }>
+                <span className={`px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wider ${item.color}`}>
                   {item.status}
                 </span>
               </div>
@@ -59,7 +60,7 @@ export const Attendance: React.FC = () => {
                   initial={{ width: 0 }}
                   animate={{ width: item.attendance }}
                   transition={{ duration: 1, delay: 0.5 }}
-                  className={h-full }
+                  className={`h-full ${item.color.split(' ')[0].replace('bg-', 'bg-')}`}
                   style={{ backgroundColor: item.color.includes('emerald') ? '#10b981' : item.color.includes('blue') ? '#3b82f6' : item.color.includes('amber') ? '#f59e0b' : '#f43f5e' }}
                 />
               </div>
@@ -99,7 +100,10 @@ export const Attendance: React.FC = () => {
                   </td>
                   <td className="px-8 py-4 text-slate-500 font-medium">{row.time}</td>
                   <td className="px-8 py-4 text-right">
-                    <span className={ont-bold }>
+                    <span className={`font-bold ${
+                      row.status === 'Present' ? 'text-emerald-500' : 
+                      row.status === 'Late' ? 'text-amber-500' : 'text-rose-500'
+                    }`}>
                       {row.status}
                     </span>
                   </td>
